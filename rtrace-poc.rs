@@ -122,7 +122,7 @@ fn debug_thread(pid: nix::unistd::Pid) {
 
 
 fn syscall_lookup(orig_rax: u32) -> String {		// lookup table from: http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
-	let call = orig_rax as u32;
+	let call = orig_rax.clone();
 	if call == 0 { return "read".to_string() }
 	if call == 1 { return "write".to_string() }
 	if call == 2 { return "open".to_string() }
