@@ -110,7 +110,7 @@ fn debug_thread(pid: nix::unistd::Pid) {
  			break
 		}
 		let registers  = match getregs(pid) {Ok(regs)=>regs,Err(_e)=>panic!("getregs() error")};
-		let orig_rax   = registers.orig_rax as u32;
+		let orig_rax   = registers.orig_rax as u16;
 		let rsi        = registers.rsi as AddressType;
 		let rdi        = registers.rdi as u8;
 		let rdx        = registers.rdx as u8;
@@ -121,7 +121,7 @@ fn debug_thread(pid: nix::unistd::Pid) {
 }
 
 
-fn syscall_lookup(orig_rax: u32) -> String {		// lookup table from: http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
+fn syscall_lookup(orig_rax: u16) -> String {		// lookup table from: http://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
 	let call = orig_rax.clone();
 	if call == 0 { return "read".to_string() }
 	if call == 1 { return "write".to_string() }
